@@ -35,7 +35,7 @@ btnSearch.addEventListener('click',(e) => {
 
             matches.map((match) => {
                 editedArray.push(searchtext.substring(previousEndIndex,match.startIndex));
-                editedArray.push(tagHead + match.match + tagTail);
+                editedArray.push(tagHead + match.match[0] + tagTail);
                 previousEndIndex = match.endIndex; //şuanki endIndex bir sonrakinin start'ı olmalı ancak original text'ten çekiyorsun yine! olacak!
             });
 
