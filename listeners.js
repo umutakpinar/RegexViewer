@@ -5,8 +5,9 @@ let btnSearch = document.getElementById("btn-search");
 let timeTag = document.getElementById("time-tag");
 let btnDarkLightMode = document.getElementById("dark-light");
 let isDark = true;
-let light_bg = '../assets/images/background-light.png';
-let dark_bg = '../assets/images/background-dark.png';
+const light_bg = '../assets/images/background-light.png';
+const dark_bg = '../assets/images/background-dark.png';
+let alertBox = document.getElementById("alert-box");
 
 textarea.addEventListener('click', function(e) {
     textarea.addEventListener("keydown",(e) => {
@@ -17,47 +18,50 @@ textarea.addEventListener('click', function(e) {
     });
 });
 
-let tagHead = "<span style='background-color: yellow; color: black;'>";
-let tagTail = "</span>";
+
+const tagHead = "<span style='background-color: yellow; color: black;'>";
+const tagTail = "</span>";
 let searchtext = textarea.innerText;
-console.log(`innerText before clicked: ${textarea.innerText}`);
 //Şimdilik tıklama ile arıyor değişikliğe göre arama yapma işlemini 500ms bekletme ile yapmalı!
 btnSearch.addEventListener('click', async (e) => {
-   
+    removeHighlights();
+    let pattern = inputRegexPattern.value;
     try{
-        let previousEndIndex = 0;
-        let pattern = inputRegexPattern.value;
-        console.log(`innerText after clicked: ${searchtext}`);
-        let regex = new RegExp(pattern,"gmi");
-
-        let startTime = performance.now();
-        let matches = [];
-        while(result = regex.exec(searchtext)) { //g flag'ı olduğu için while ile çalıştırmalı!
-            matches.push({startIndex: result.index, endIndex: result.index + result[0].length, match : result});
-        }
-        let editedArray = [];
-
-        if(matches.length > 0){
-
-            matches.map((match) => {
-                editedArray.push(searchtext.substring(previousEndIndex,match.startIndex));
-                editedArray.push(tagHead + match.match[0] + tagTail);
-                previousEndIndex = match.endIndex; //şuanki endIndex bir sonrakinin start'ı olmalı ancak original text'ten çekiyorsun yine! olacak!
-            });
-
-            //en son kalan kısmı ekle!
-            editedArray.push(searchtext.substring(previousEndIndex));
-            textarea.innerText = "";
-            textarea.innerHTML = editedArray.join("");
-            let endTime = performance.now();
-            timeTag.innerText = `${(endTime-startTime).toFixed(2)}ms`;
+        if(pattern == null || pattern == undefined || pattern == ".*" || pattern == ""){
+            createAlertMessage("alert-warning","Lütfen bir pattern girin ya da pattern'i değiştirin. <a href='https://www.regular-expressions.info/catastrophic.html' target = '_blank'>Catastrophic Backtracking</a>'e dikkat edin.");
         }else{
-            timeTag.innerText = "No match!";
+            let previousEndIndex = 0;
+            let regex = new RegExp(pattern,"gmi");
+            let startTime = performance.now();
+            let matches = [];
+            while(result = regex.exec(searchtext)) { //g flag'ı olduğu için while ile çalıştırmalı!
+                matches.push({startIndex: result.index, endIndex: result.index + result[0].length, match : result});
+            }
+            createAlertMessage("alert-success",`${matches.length} eşleşme bulundu.`);
+            let editedArray = [];
+
+            if(matches.length > 0){
+
+                matches.map((match) => {
+                    editedArray.push(searchtext.substring(previousEndIndex,match.startIndex));
+                    editedArray.push(tagHead + match.match[0] + tagTail);
+                    previousEndIndex = match.endIndex; //şuanki endIndex bir sonrakinin start'ı olmalı ancak original text'ten çekiyorsun yine! olacak!
+                });
+
+                //en son kalan kısmı ekle!
+                editedArray.push(searchtext.substring(previousEndIndex));
+                textarea.innerText = "";
+                textarea.innerHTML = editedArray.join("");
+                let endTime = performance.now();
+                timeTag.innerText = `${(endTime-startTime).toFixed(2)}ms`;
+            }else{
+                timeTag.innerText = "No match!";
+            }
         }
     }catch(exception){
         console.log("*****"+exception);
     }
-
+    
 });
 
 textarea.addEventListener("input",() => {
@@ -109,3 +113,21 @@ textarea.addEventListener('copy', function(event) {
     console.log("isdark?: " + isDark);
     document.body.style.backgroundImage = `url('${selection}')`;
   });
+
+  function createAlertMessage(msgType = "alert-warning", message  = ""){
+    alertBox.innerHTML = "";
+    alertBox.innerHTML = `
+    <div class="alert ${msgType} alert-dismissible fade show p-2 ps-4" role="alert" style="position: fixed; right: 1vw; bottom: 5vw;">
+        ${message}
+        <button type="button" class="close btn btn-close-white" data-bs-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>`;
+  }
+
+function removeHighlights(){
+    let txt = "";
+    txt = searchtext.replaceAll(tagHead,"");
+    txt = txt.replaceAll(tagTail,"");
+    textarea.innerText = txt;
+}
