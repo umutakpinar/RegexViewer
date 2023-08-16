@@ -96,8 +96,6 @@ textarea.addEventListener('copy', function(event) {
     const selectedText = window.getSelection().toString();
     event.clipboardData.setData('text/plain', selectedText);
     textarea.innerHTML = text.substring(0,window.getSelection().anchorOffset) + text.substring(window.getSelection().focusOffset);
-   //Burada da rematch edilmeli
-
 });
 
 //Ekranı temizleme butonu
@@ -144,6 +142,7 @@ function removeHighlights(){
     txt = searchtext.replaceAll(tagHead,"");
     txt = txt.replaceAll(tagTail,"");
     textarea.innerText = txt;
+    textarea.focus();
 }
 
 checkboxes.forEach(element => {
