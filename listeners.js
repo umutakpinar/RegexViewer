@@ -17,7 +17,7 @@ textarea.addEventListener('click', function(e) {
     });
 });
 
-let tagHead = "<span style='background-color: yellow;'>";
+let tagHead = "<span style='background-color: yellow; color: black;'>";
 let tagTail = "</span>";
 let searchtext = textarea.innerText;
 console.log(`innerText before clicked: ${textarea.innerText}`);
@@ -96,13 +96,16 @@ textarea.addEventListener('copy', function(event) {
     let selection;
     if(isDark){
         selection = light_bg;
-        timeTag.style.color = 'black'; 
+        timeTag.style.color = 'black';
         isDark = false;
     }else{
         selection = dark_bg;
         timeTag.style.color = 'yellow';
         isDark = true;
     }
+
+    textarea.classList.toggle("bg-dark");
+    textarea.classList.toggle("text-white");
     console.log("isdark?: " + isDark);
     document.body.style.backgroundImage = `url('${selection}')`;
   });
