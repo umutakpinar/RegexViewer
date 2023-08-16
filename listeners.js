@@ -19,7 +19,7 @@ textarea.addEventListener('click', function(e) {
 });
 
 
-const tagHead = "<span style='background-color: yellow; color: black;'>";
+const tagHead = "<span class='little-space' style='background-color: yellow; color: black;'>";
 const tagTail = "</span>";
 let searchtext = textarea.innerText;
 //Şimdilik tıklama ile arıyor değişikliğe göre arama yapma işlemini 500ms bekletme ile yapmalı!
@@ -31,7 +31,7 @@ btnSearch.addEventListener('click', async (e) => {
             createAlertMessage("alert-warning","Lütfen bir pattern girin ya da pattern'i değiştirin. <a href='https://www.regular-expressions.info/catastrophic.html' target = '_blank'>Catastrophic Backtracking</a>'e dikkat edin.");
         }else{
             let previousEndIndex = 0;
-            let regex = new RegExp(pattern,"gmi");
+            let regex = new RegExp(pattern,"g");
             let startTime = performance.now();
             let matches = [];
             while(result = regex.exec(searchtext)) { //g flag'ı olduğu için while ile çalıştırmalı!
@@ -59,7 +59,7 @@ btnSearch.addEventListener('click', async (e) => {
             }
         }
     }catch(exception){
-        console.log("*****"+exception);
+        createAlertMessage("alert-danger",`<span style = "color: red;">${exception}</span>`);
     }
     
 });
