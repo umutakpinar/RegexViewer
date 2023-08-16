@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
-    <script defer src="assets/bootstrap/scripts/bootstrap.min.js"></script>
+    <script defer src="assets/bootstrap/scripts/bootstrap.bundle.min.js"></script>
     <title>Vakıfbank | RegexViewer</title>
 </head>
 
@@ -37,13 +37,62 @@
     <!--  -->
     <div class="container h-25 d-flex justify-content-center">
         <div class="row align-content-center">
-            <div class="col-1 pt-3 mx-3">
+            <div class="col-sm-1 pt-3 mx-3 d-flex">
                 <p id="time-tag" style="color: yellow;"></p>
             </div>
-            <div class="searchbar col ">
+            <div class="searchbar col d-flex justify-content-between">
                 <input id="regexPattern" class="search_input" type="text" name="" placeholder="Enter your regex here ...">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary rounded-5 dropdown-toggle" data-bs-auto-close="outside" id="defaultDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                      Flags
+                    </button>
+                    <ul class="dropdown-menu p-3" aria-labelledby="dropdownMenuClickableOutside" style="width: 25vw;">
+                        <li>
+                            <div class="form-check form-switch" title="Generate indices for substring matches.">
+                                <input class="form-check-input" type="checkbox" id="d">
+                                <label class="form-check-label" for="d">d - hasIndices</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-check form-switch" title="Global search.">
+                                <input class="form-check-input" type="checkbox" id="g" checked>
+                                <label class="form-check-label" for="g">g - global</label>
+                              </div>
+                        </li>
+                        <li>
+                            <div class="form-check form-switch" title="Case-insensitive search.">
+                                <input class="form-check-input" type="checkbox" id="i">
+                                <label class="form-check-label" for="i">i - ignoreCase</label>
+                              </div>
+                        </li>
+                        <li>
+                            <div class="form-check form-switch" title="Allows ^ and $ to match newline characters.">
+                                <input class="form-check-input" type="checkbox" id="m">
+                                <label class="form-check-label" for="m">m - multiline</label>
+                              </div>
+                        </li>
+                        <li>
+                            <div class="form-check form-switch" title="Allows . to match newline characters.">
+                                <input class="form-check-input" type="checkbox" id="s">
+                                <label class="form-check-label" for="s">s - dotAll</label>
+                              </div>
+                        </li>
+                        <li>
+                            <div class="form-check form-switch" title='"Unicode"; treat a pattern as a sequence of Unicode code points.'>
+                                <input class="form-check-input" type="checkbox" id="u">
+                                <label class="form-check-label" for="u">u - unicode</label>
+                              </div>
+                        </li>
+                        <li>
+                            <div class="form-check form-switch" title='Perform a "sticky" search that matches starting at the current position in the target string.'>
+                                <input class="form-check-input" type="checkbox" id="y">
+                                <label class="form-check-label" for="y">y - sticky</label>
+                              </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="container col-1 mt-2">
+            <div class="container d-flex col-1">
                 <button id="btn-search" class="btn btn-warning rounded-5">Search</button>
             </div>
         </div>

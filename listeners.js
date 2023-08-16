@@ -5,9 +5,20 @@ let btnSearch = document.getElementById("btn-search");
 let timeTag = document.getElementById("time-tag");
 let btnDarkLightMode = document.getElementById("dark-light");
 let isDark = true;
+let checkboxes = document.querySelectorAll("input[type='checkbox']");
 const light_bg = '../assets/images/background-light.png';
 const dark_bg = '../assets/images/background-dark.png';
 let alertBox = document.getElementById("alert-box");
+
+let checkboxSituations = {
+    d : false,
+    g : true,
+    i : false,
+    m : false,
+    s : false,
+    u : false,
+    y : false
+}
 
 textarea.addEventListener('click', function(e) {
     textarea.addEventListener("keydown",(e) => {
@@ -27,11 +38,14 @@ btnSearch.addEventListener('click', async (e) => {
     removeHighlights();
     let pattern = inputRegexPattern.value;
     try{
-        if(pattern == null || pattern == undefined || pattern == ".*" || pattern == ""){
+        if(pattern == null || pattern == undefined || pattern == ""){
             createAlertMessage("alert-warning","Lütfen bir pattern girin ya da pattern'i değiştirin. <a href='https://www.regular-expressions.info/catastrophic.html' target = '_blank'>Catastrophic Backtracking</a>'e dikkat edin.");
-        }else{
+        }else if(pattern == ".*"){
+            createAlertMessage("alert-success","This pattern selects everything.")
+        }
+        else{
             let previousEndIndex = 0;
-            let regex = new RegExp(pattern,"g");
+            let regex = new RegExp(pattern,getCheckedCheckboxesAsString());
             let startTime = performance.now();
             let matches = [];
             while(result = regex.exec(searchtext)) { //g flag'ı olduğu için while ile çalıştırmalı!
@@ -131,3 +145,23 @@ function removeHighlights(){
     txt = txt.replaceAll(tagTail,"");
     textarea.innerText = txt;
 }
+
+checkboxes.forEach(element => {
+    element.addEventListener("change",(e)=>{
+        Object.keys(checkboxSituations).forEach(key => {
+            if(key == element.id){
+                checkboxSituations[key] = element.checked;
+            }
+        });
+    });
+});
+
+function getCheckedCheckboxesAsString(){
+    let checkedOnes = Object.keys(checkboxSituations).filter((key) => {
+        if(checkboxSituations[key] == true){
+            return key;
+        }
+    });
+    return checkedOnes.join("");
+}
+
