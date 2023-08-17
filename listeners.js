@@ -37,9 +37,6 @@ inputRegexPattern.addEventListener('input', async (e) => {
     removeHighlights();
     let pattern = inputRegexPattern.value;
     try{
-       Object.keys(checkboxSituations).forEach((key)=>{
-        console.log(`${key} - ${checkboxSituations[key]}`);
-       })
         if(pattern == null || pattern == undefined || pattern == ""){
             createAlertMessage("alert-warning","Lütfen bir pattern girin ya da pattern'i değiştirin. <a href='https://www.regular-expressions.info/catastrophic.html' target = '_blank'>Catastrophic Backtracking</a>'e dikkat edin.");
         }/*else if(pattern == ".*"){
@@ -129,7 +126,6 @@ textarea.addEventListener('copy', function(event) {
 
     textarea.classList.toggle("bg-dark");
     textarea.classList.toggle("text-white");
-    console.log("isdark?: " + isDark);
     document.body.style.backgroundImage = `url('${selection}')`;
   });
 
