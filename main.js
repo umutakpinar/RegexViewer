@@ -7,7 +7,12 @@ const { app, BrowserWindow } = electron;
 let mainWindow;
 
 app.on("ready", () => {
-    mainWindow = new BrowserWindow({});
+    mainWindow = new BrowserWindow({
+        minHeight : 540,
+        minWidth : 960,
+        width : 960,
+        height : 540,
+    });
 
     mainWindow.loadURL(
         url.format({

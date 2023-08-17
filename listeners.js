@@ -8,13 +8,13 @@ const btnClearAll = document.getElementById("clear-all");
 const inputRegexPattern = document.getElementById("regexPattern");
 const timeTag = document.getElementById("time-tag");
 const btnDarkLightMode = document.getElementById("dark-light");
-const isDark = true;
 const checkboxes = document.querySelectorAll("input[type='checkbox']");
 const alertBox = document.getElementById("alert-box");
 const tagHead = "<span class='little-space' style='background-color: yellow; color: black;'>";
 const tagTail = "</span>";
 
 //STATES
+let isDark = true;
 let searchtext = textarea.innerText;
 let checkboxSituations = {
     d : false,
