@@ -1,4 +1,6 @@
 let textarea = document.getElementById('text-area');
+let mainContainer = document.getElementById("main-container");
+let mainHeader = document.getElementById("main-header");
 let btnClearAll = document.getElementById("clear-all");
 let inputRegexPattern = document.getElementById("regexPattern");
 let timeTag = document.getElementById("time-tag");
@@ -115,10 +117,18 @@ textarea.addEventListener('copy', function(event) {
   btnDarkLightMode.addEventListener("click",(e)=>{
     let selection;
     if(isDark){
+        mainContainer.classList.add("bg-warning");
+        mainHeader.classList.add("text-dark");
+        mainContainer.classList.remove("bg-dark");
+        mainHeader.classList.remove("text-warning");
         selection = light_bg;
         timeTag.style.color = 'black';
         isDark = false;
     }else{
+        mainContainer.classList.add("bg-dark");
+        mainHeader.classList.add("text-warning");
+        mainContainer.classList.remove("bg-warning");
+        mainHeader.classList.remove("text-dark");
         selection = dark_bg;
         timeTag.style.color = 'yellow';
         isDark = true;
