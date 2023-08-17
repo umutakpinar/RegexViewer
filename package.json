@@ -1,6 +1,6 @@
 {
   "name": "regexviewer",
-  "productName": "VBRegexViewer Multiplatform App",
+  "productName": "VBRegexViewer",
   "version": "1.0.0",
   "description": "Vakif Internship Task 3 - Regex Viewer - github.com/umutakpinar",
   "main": "main.js",
