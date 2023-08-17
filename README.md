@@ -21,11 +21,11 @@
         - Clone the repo.
         - Locate the cloen folder, run `npm install` and install the project dependencies.
         - run `npm install electron-packager -g`
-            - for Windows Build :  
+            - for MacOS Build (x86) :  
               `electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds`
             - for MacOS Build (arm64) :  
               `electron-packager . --overwrite --platform=darwin --arch=arm64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds`
-            - for MacOS Build :  
+            - for Windows Build :  
               `electron-packager . vbregexviewer --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName="VBRegexViewer"`
         - Your build files will appear under the release-builds folder.   
           > [!NOTE]
