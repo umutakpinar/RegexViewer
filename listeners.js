@@ -1,7 +1,6 @@
 let textarea = document.getElementById('text-area');
 let btnClearAll = document.getElementById("clear-all");
 let inputRegexPattern = document.getElementById("regexPattern");
-let btnSearch = document.getElementById("btn-search");
 let timeTag = document.getElementById("time-tag");
 let btnDarkLightMode = document.getElementById("dark-light");
 let isDark = true;
@@ -34,7 +33,7 @@ const tagHead = "<span class='little-space' style='background-color: yellow; col
 const tagTail = "</span>";
 let searchtext = textarea.innerText;
 //Şimdilik tıklama ile arıyor değişikliğe göre arama yapma işlemini 500ms bekletme ile yapmalı!
-btnSearch.addEventListener('click', async (e) => {
+inputRegexPattern.addEventListener('input', async (e) => {
     removeHighlights();
     let pattern = inputRegexPattern.value;
     try{
