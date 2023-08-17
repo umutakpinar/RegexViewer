@@ -1,16 +1,21 @@
-let textarea = document.getElementById('text-area');
-let mainContainer = document.getElementById("main-container");
-let mainHeader = document.getElementById("main-header");
-let btnClearAll = document.getElementById("clear-all");
-let inputRegexPattern = document.getElementById("regexPattern");
-let timeTag = document.getElementById("time-tag");
-let btnDarkLightMode = document.getElementById("dark-light");
-let isDark = true;
-let checkboxes = document.querySelectorAll("input[type='checkbox']");
-const light_bg = '../assets/images/background-light.png';
-const dark_bg = '../assets/images/background-dark.png';
-let alertBox = document.getElementById("alert-box");
+//CONSTANTS
+const light_bg = 'assets/images/background-light.png';
+const dark_bg = 'assets/images/background-dark.png';
+const textarea = document.getElementById('text-area');
+const appbarContainer = document.getElementById("appbar-container");
+const mainHeader = document.getElementById("main-header");
+const btnClearAll = document.getElementById("clear-all");
+const inputRegexPattern = document.getElementById("regexPattern");
+const timeTag = document.getElementById("time-tag");
+const btnDarkLightMode = document.getElementById("dark-light");
+const isDark = true;
+const checkboxes = document.querySelectorAll("input[type='checkbox']");
+const alertBox = document.getElementById("alert-box");
+const tagHead = "<span class='little-space' style='background-color: yellow; color: black;'>";
+const tagTail = "</span>";
 
+//STATES
+let searchtext = textarea.innerText;
 let checkboxSituations = {
     d : false,
     g : true,
@@ -21,6 +26,8 @@ let checkboxSituations = {
     y : false
 }
 
+//LISTENERS
+//Text Area Click Listener
 textarea.addEventListener('click', function(e) {
     textarea.addEventListener("keydown",(e) => {
 
@@ -30,11 +37,38 @@ textarea.addEventListener('click', function(e) {
     });
 });
 
+//Text Area Input Listener
+textarea.addEventListener("input",() => {
+    searchtext = textarea.innerText;
+});
 
-const tagHead = "<span class='little-space' style='background-color: yellow; color: black;'>";
-const tagTail = "</span>";
-let searchtext = textarea.innerText;
-//Şimdilik tıklama ile arıyor değişikliğe göre arama yapma işlemini 500ms bekletme ile yapmalı!
+//Checkbox Change Listeners
+checkboxes.forEach(element => {
+    element.addEventListener("change",(e)=>{
+        Object.keys(checkboxSituations).forEach(key => {
+            if(key == element.id){
+                checkboxSituations[key] = element.checked;
+            }
+        });
+    });
+});
+
+//Text Area Copy/Cut Listeners
+textarea.addEventListener('copy', function(event) {
+    event.preventDefault(); // Varsayılan kopyalama işlemini iptal et
+    const selectedText = window.getSelection().toString();
+    event.clipboardData.setData('text/plain', selectedText);
+  });
+
+textarea.addEventListener('cut', function(event) {
+    event.preventDefault();
+    let text = textarea.innerText;
+    const selectedText = window.getSelection().toString();
+    event.clipboardData.setData('text/plain', selectedText);
+    textarea.innerHTML = text.substring(0,window.getSelection().anchorOffset) + text.substring(window.getSelection().focusOffset);
+});
+
+//Regex Area Input Listener
 inputRegexPattern.addEventListener('input', async (e) => {
     removeHighlights();
     let pattern = inputRegexPattern.value;
@@ -84,27 +118,8 @@ inputRegexPattern.addEventListener('input', async (e) => {
     
 });
 
-textarea.addEventListener("input",() => {
-    searchtext = textarea.innerText;
-});
 
-//Copy özellğini düzeltmek için
-textarea.addEventListener('copy', function(event) {
-    event.preventDefault(); // Varsayılan kopyalama işlemini iptal et
-    const selectedText = window.getSelection().toString();
-    event.clipboardData.setData('text/plain', selectedText);
-  });
-
-//Cut özellğini düzeltmek için
-  textarea.addEventListener('cut', function(event) {
-    event.preventDefault();
-    let text = textarea.innerText;
-    const selectedText = window.getSelection().toString();
-    event.clipboardData.setData('text/plain', selectedText);
-    textarea.innerHTML = text.substring(0,window.getSelection().anchorOffset) + text.substring(window.getSelection().focusOffset);
-});
-
-//Ekranı temizleme butonu
+//Clear Button Click Listener
   btnClearAll.addEventListener("click",(e)=>{
         let result = confirm("Ekran temizlensin mi?");
         if(result){
@@ -114,20 +129,21 @@ textarea.addEventListener('copy', function(event) {
         }
   });
 
-  btnDarkLightMode.addEventListener("click",(e)=>{
+//Dark/Light Mode Click Listener
+btnDarkLightMode.addEventListener("click",(e)=>{
     let selection;
     if(isDark){
-        mainContainer.classList.add("bg-warning");
+        appbarContainer.classList.add("bg-warning");
         mainHeader.classList.add("text-dark");
-        mainContainer.classList.remove("bg-dark");
+        appbarContainer.classList.remove("bg-dark");
         mainHeader.classList.remove("text-warning");
         selection = light_bg;
         timeTag.style.color = 'black';
         isDark = false;
     }else{
-        mainContainer.classList.add("bg-dark");
+        appbarContainer.classList.add("bg-dark");
         mainHeader.classList.add("text-warning");
-        mainContainer.classList.remove("bg-warning");
+        appbarContainer.classList.remove("bg-warning");
         mainHeader.classList.remove("text-dark");
         selection = dark_bg;
         timeTag.style.color = 'yellow';
@@ -139,7 +155,9 @@ textarea.addEventListener('copy', function(event) {
     document.body.style.backgroundImage = `url('${selection}')`;
   });
 
-  function createAlertMessage(msgType = "alert-warning", message  = ""){
+//FUNCTIONS
+//Create Alert Message Function
+function createAlertMessage(msgType = "alert-warning", message  = ""){
     alertBox.innerHTML = "";
     alertBox.innerHTML = `
     <div class="alert ${msgType} alert-dismissible fade show p-2 ps-4" role="alert" style="position: fixed; right: 1vw; bottom: 5vw;">
@@ -149,7 +167,12 @@ textarea.addEventListener('copy', function(event) {
         </button>
     </div>`;
   }
-
+//Remove Highlights From Text Area Function
+/* Not : 
+* Uygulamada halihazırda bir WYSIWYG Editor kullanmadığımdan dolayı,
+* bu fonksiyon çalıştığında Text Area'da cursor, innerText'in en başına gidiyor.
+* Geliştirme yaparken bu durumu göz önünde bulundurun.
+*/
 function removeHighlights(){
     let txt = "";
     txt = searchtext.replaceAll(tagHead,"");
@@ -157,16 +180,7 @@ function removeHighlights(){
     textarea.innerText = txt;
 }
 
-checkboxes.forEach(element => {
-    element.addEventListener("change",(e)=>{
-        Object.keys(checkboxSituations).forEach(key => {
-            if(key == element.id){
-                checkboxSituations[key] = element.checked;
-            }
-        });
-    });
-});
-
+//Find Checkbox Values Which is True and Return Them as String Function
 function getCheckedCheckboxesAsString(){
     let checkedOnes = Object.keys(checkboxSituations).filter((key) => {
         if(checkboxSituations[key] == true){

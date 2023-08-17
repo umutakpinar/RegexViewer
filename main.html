@@ -6,42 +6,51 @@
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
     <script defer src="assets/bootstrap/scripts/bootstrap.bundle.min.js"></script>
-    <title>Vakıfbank | RegexViewer</title>
+    <title>Vakifbank | RegexViewer</title>
 </head>
 
 <body id="body">
-    <!--  -->
-    <div id="main-container" class="container-fluid bg-warning p-3">
+    <!-- Appbar Container Start -->
+    <div id="appbar-container" class="container-fluid bg-warning p-3">
         <div class="row px-3 ">
+            <!-- Header Start -->
             <div class="col align-content-center">
-                <h1 id="main-header" class="h1 px-xl-5 text-dark"><i>RegexViewer</i></h1>
+                <h1 id="main-header" class="h1 px-xl-5 text-dark"><i>VBRegexViewer</i></h1>
             </div>
+             <!-- Header End -->
             <div class="col-2">
                 <div class="row-1 align-content-center">   
+                    <!-- Dark/Light Mode Button Start -->
                     <button id="dark-light"  class="btn btn-secondary p-3" title="Dark Mode/Light Mode">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lightbulb" viewBox="0 0 16 16">
                             <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13a.5.5 0 0 1 0 1 .5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1 0-1 .5.5 0 0 1 0-1 .5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm6-5a5 5 0 0 0-3.479 8.592c.263.254.514.564.676.941L5.83 12h4.342l.632-1.467c.162-.377.413-.687.676-.941A5 5 0 0 0 8 1z"/>
                           </svg>
                     </button>
+                    <!-- Dark/Light Mode Button End -->
+                    <!-- Clear Input Button Start -->
                     <button id="clear-all" class="btn btn-danger p-3" title="Clear all input boxes">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
                         </svg>
                     </button>
+                    <!-- Clear Input Button End -->
                 </div>
             </div>
         </div>
     </div>
-    <!--  -->
+    <!-- Appbar Container End -->
 
-    <!--  -->
+    <!-- Regex Input Container Start -->
     <div class="container h-25 d-flex justify-content-center">
         <div class="row align-content-center">
             <div class="col-sm-1 pt-3 mx-3 d-flex">
                 <p id="time-tag" style="color: yellow;"></p>
             </div>
             <div class="searchbar col d-flex justify-content-between">
+                <!-- Regex Input Start -->
                 <input id="regexPattern" class="search_input" type="text" name="" placeholder="Enter your regex here ...">
+                <!-- Regex Input End -->
+                <!-- Checkboxes & Flags Group Start -->
                 <div class="btn-group">
                     <button type="button" class="btn btn-secondary rounded-5 dropdown-toggle" data-bs-auto-close="outside" id="defaultDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                       Flags
@@ -91,12 +100,13 @@
                         </li>
                     </ul>
                 </div>
+                <!-- Checkboxes & Flags Group End -->
             </div>
         </div>
     </div>
-    <!--  -->
+    <!-- Regex Input Container End -->
 
-    <!--  -->
+    <!-- Text Area Container Start -->
     <div class="container p-3 h-50 mb-lg-5 bg-dark align-content-center justify-content-center rounded-2">
         <pre type="text" id="text-area" rows="10" class="form-control h-100 p-3 bg-dark text-white" contenteditable>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
 Saepe quibusdam hic corporis incidunt repellendus dicta. 
@@ -105,12 +115,12 @@ beatae facilis quia assumenda rerum explicabo qui tempora vitae quibusdam invent
 perspiciatis enim doloremque? Vel sint odio repellendus officiis magni delectus autem veritatis dolores, accusantium provident.
         </pre>
     </div>
-
+    <!-- Text Area Container End -->
+    <!-- Alert Box Area Start -->
     <div id="alert-box">
         
     </div>
-    
-    <!--  -->
+    <!-- Alert Box Area End -->
     <script src="listeners.js"></script>
 </body>
 
