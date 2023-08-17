@@ -40,15 +40,20 @@ btnSearch.addEventListener('click', async (e) => {
     try{
         if(pattern == null || pattern == undefined || pattern == ""){
             createAlertMessage("alert-warning","Lütfen bir pattern girin ya da pattern'i değiştirin. <a href='https://www.regular-expressions.info/catastrophic.html' target = '_blank'>Catastrophic Backtracking</a>'e dikkat edin.");
-        }else if(pattern == ".*"){
+        }/*else if(pattern == ".*"){
             createAlertMessage("alert-success","This pattern selects everything.")
-        }
+        }*/
         else{
             let previousEndIndex = 0;
             let regex = new RegExp(pattern,getCheckedCheckboxesAsString());
             let startTime = performance.now();
             let matches = [];
+            let stopper = 0;
             while(result = regex.exec(searchtext)) { //g flag'ı olduğu için while ile çalıştırmalı!
+                stopper++;
+                if(stopper > searchtext.trim().length || result[0] == "" || result == undefined){
+                    break;
+                }
                 matches.push({startIndex: result.index, endIndex: result.index + result[0].length, match : result});
             }
             createAlertMessage("alert-success",`${matches.length} eşleşme bulundu.`);
@@ -142,7 +147,6 @@ function removeHighlights(){
     txt = searchtext.replaceAll(tagHead,"");
     txt = txt.replaceAll(tagTail,"");
     textarea.innerText = txt;
-    textarea.focus();
 }
 
 checkboxes.forEach(element => {
