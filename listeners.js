@@ -13,9 +13,9 @@ let alertBox = document.getElementById("alert-box");
 let checkboxSituations = {
     d : false,
     g : true,
-    i : false,
-    m : false,
-    s : false,
+    i : true,
+    m : true,
+    s : true,
     u : false,
     y : false
 }
@@ -38,6 +38,9 @@ btnSearch.addEventListener('click', async (e) => {
     removeHighlights();
     let pattern = inputRegexPattern.value;
     try{
+       Object.keys(checkboxSituations).forEach((key)=>{
+        console.log(`${key} - ${checkboxSituations[key]}`);
+       })
         if(pattern == null || pattern == undefined || pattern == ""){
             createAlertMessage("alert-warning","Lütfen bir pattern girin ya da pattern'i değiştirin. <a href='https://www.regular-expressions.info/catastrophic.html' target = '_blank'>Catastrophic Backtracking</a>'e dikkat edin.");
         }/*else if(pattern == ".*"){
@@ -49,7 +52,7 @@ btnSearch.addEventListener('click', async (e) => {
             let startTime = performance.now();
             let matches = [];
             let stopper = 0;
-            while(result = regex.exec(searchtext)) { //g flag'ı olduğu için while ile çalıştırmalı!
+            while(result = regex.exec(searchtext.trim())) { //g flag'ı olduğu için while ile çalıştırmalı!
                 stopper++;
                 if(stopper > searchtext.trim().length || result[0] == "" || result == undefined){
                     break;
